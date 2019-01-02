@@ -4,6 +4,8 @@ title:      News is bad for you  :翻译
 data:       2019-01-02
 author:     M.Shaw
 catalog: true
+tags:
+      效率
 
 # News is bad for you!
 ---
