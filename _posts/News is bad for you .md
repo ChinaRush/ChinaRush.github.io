@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      News is bad for you   :翻译
+title:      News is bad for you  :翻译
 data:       2019-01-02
 author:     M.Shaw
 catalog: true
