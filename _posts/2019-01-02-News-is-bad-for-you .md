@@ -3,7 +3,7 @@ layout:     post
 title:      News is bad for you 
 data:       2019-01-02
 author:     M.Shaw
-header-img: img/cellphone-coffee-desk.jpg
+header-img: img/casual-couch-electronics.jpg
 catalog: true
 tags:
       效率
