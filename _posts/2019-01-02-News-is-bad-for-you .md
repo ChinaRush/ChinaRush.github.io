@@ -22,7 +22,7 @@ tags:
 
 
 刚好今天看到一篇卫报的一篇文章，讲的是媒体新闻的坏处。
-*[**原文链接**](https://www.theguardian.com/media/2013/apr/12/news-is-bad-rolf-dobelli)
+[**原文链接**](https://www.theguardian.com/media/2013/apr/12/news-is-bad-rolf-dobelli)
 
 在过去的几十年里，我们当中那些幸运的人已经认识到食物过剩(肥胖、糖尿病)的危害，并开始改变我们的饮食习惯。但我们大多数人还不明白，新闻之于思维，就像糖之于身体一样。新闻容易消化，媒体给我们提供了一些小片段的琐碎信息，那些与我们的生活无关的、不需要思考的花絮。这就是为什么我们大脑几乎没有什么长进。不像阅读书籍和长篇杂志文章(这需要思考)。
 ### 1.新闻具有误导性
@@ -52,5 +52,5 @@ tags:
 *I have now gone without news for four years, so I can see, feel and report the effects of this freedom first-hand: 
 less disruption, less anxiety, deeper thinking, more time, more insights. It's not easy, but it's worth it.
 
-我已经四年没有碰过新闻，所以我想把这给我带来的影响分给你们：
+我已经四年没有碰过新闻，所以我想把这给我带来的影响分享给你们：
 更少的打扰、更少的焦虑、更深的思考、更多的时间，更强的洞察力，这并不容易，但很值得。
