@@ -1,6 +1,6 @@
 ---
 layout :    post
-title :     list.sort() vs sorted(list)
+title :     列表的 sort() vs sorted()
 data:       2019-01-08
 author:     M.Shaw
 catalog:    true
@@ -16,8 +16,9 @@ list 算是Python中最重要的一种数据结构，用的最多，功能强大
 现在是涉及到list的排序，有两种方法：
 * list.sort()
 * sorted(list)
+
 这两种方法都可以将list内部元素按照升序（默认为升序，如果要降序，需要将参数reverse设置,list.sort(reverse = True)排序.
-### 区别在于：
+### 区别：
 * list.sort() 是对list原地排序，也就是原来的顺序会被打乱，返回None(返回None这个地方容易被误用）
 * sorted(list) 使用时会返回一个新的排序后的list，保持原来的list不变
 sorted可以作用于任何可迭代的结构，例如还有strings, tuples, dictonaries(得到keys),generators等，然后返回一个元素排序后的list
