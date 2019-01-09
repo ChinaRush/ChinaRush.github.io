@@ -1,7 +1,7 @@
 # Site settings
 title: M.Shaw Blog
 SEOTitle: zongbaoxiao | M.Shaw Blog
-header-img: img/post-bg-desk.jpg
+header-img: img/bg.jpeg
 email: XZBRush@163.com
 description: "Every failure is leading towards success."
 keyword: "M.Shaw, M.Shaw Blog,, Machine Learning, Apple, iPhone"
@@ -99,16 +99,13 @@ service-worker: true
 # Friends
 friends: [
     {
-        title: "Friend A",
+        title: "女友A",
         href: "http://www.google.com"
     },{
-        title: "Friend B",
+        title: "女友B",
         href: "http://www.stackoverflow.com/"
     },{
-        title: "Apple",
+        title: "女友C",
         href: "https://apple.com"
-    },{
-        title: "Apple Developer",
-        href: "https://developer.apple.com/"
-    }
+    },
 ]
