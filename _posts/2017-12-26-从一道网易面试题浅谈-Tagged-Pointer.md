@@ -1,107 +1,76 @@
 ---
 layout:     post
-title:      从一道网易面试题浅谈 Tagged Pointer
-subtitle:   浅谈 Tagged Pointer
+title:      Markdown的基本语法格式
+
 date:       2017-12-26
-author:     BY
+author:     M.Shaw
 header-img: img/post-bg-universe.jpg
 catalog: true
 tags:
-    - iOS
+    - 写作
 ---
 
 
 ## 前言
 
-这篇博客九月就想写了，因为赶项目拖了到现在，抓住17年尾巴写吧~
+Markdown是一种纯文本格式的标记语言。通过简单的标记语法，它可以使普通文本内容具有一定的格式，是写作的优秀工具
+
+优点：
+1、因为是纯文本，所以只要支持Markdown的地方都能获得一样的编辑效果，可以让作者摆脱排版的困扰，专心写作。
+2、操作简单。
+
+缺点：
+1、需要记一些语法（当然，是很简单。五分钟学会）。
+2、有些平台不支持Markdown编辑模式。
 
 
-## 正文
+## 段落和换行
 
-上次看了一篇 [《从一道网易面试题浅谈OC线程安全》](https://www.jianshu.com/p/cec2a41aa0e7) 的博客，主要内容是：
+一个 Markdown 段落是由一个或多个连续的文本行组成，它的前后要有一个以上的空行（空行的定义是显示上看起来像是空的，便会被视为空行。比方说，若某一行只包含空格和制表符，则该行也会被视为空行）。普通段落不该用空格或制表符来缩进。
 
-作者去网易面试，面试官出了一道面试题：下面代码会发生什么问题？
+「由一个或多个连续的文本行组成」这句话其实暗示了 Markdown 允许段落内的强迫换行（插入换行符），这个特性和其他大部分的 text-to-HTML 格式不一样（包括 Movable Type 的「Convert Line Breaks」选项），其它的格式会把每个换行符都转成 <br /> 标签。
 
-```objc
-@property (nonatomic, strong) NSString *target;
-//....
-dispatch_queue_t queue = dispatch_queue_create("parallel", DISPATCH_QUEUE_CONCURRENT);
-for (int i = 0; i < 1000000 ; i++) {
-    dispatch_async(queue, ^{
-        self.target = [NSString stringWithFormat:@"ksddkjalkjd%d",i];
-    });
-}
+如果你确实想要依赖 Markdown 来插入 <br /> 标签的话，在插入处先按入两个以上的空格然后回车。
+
+的确，需要多费点事（多加空格）来产生 <br /> ，但是简单地「每个换行都转换为 <br />」的方法在 Markdown 中并不适合， Markdown 中 email 式的 区块引用 和多段落的 列表 在使用换行来排版的时候，不但更好用，还更方便阅读
+
+## 标题
+Markdown 支持两种标题的语法，类 Setext 和类 atx 形式。
+
+类 Setext 形式是用底线的形式，利用 = （最高阶标题）和 - （第二阶标题），例如
 ```
+this is an H1
+===========
 
-答案是：会 crash。
-
-我们来看看对`target`属性（`strong`修饰）进行赋值，相当与 MRC 中的
-
+this is an H2
+------------
 ```
-- (void)setTarget:(NSString *)target {
-    if (target == _target) return;
-    id pre = _target;
-    [target retain];//1.先保留新值
-    _target = target;//2.再进行赋值
-    [pre release];//3.释放旧值
-}
-```
+任何数量的 =  和  - 都有效果
 
-因为在 *并行队列* `DISPATCH_QUEUE_CONCURRENT` 中*异步* `dispatch_async` 对 `target`属性进行赋值，就会导致 target 已经被 `release`了，还会执行 `release`。这就是向已释放内存对象发送消息而发生 crash 。
+类Atx形式则是在行首插1 到6 个#，对应标题1到6阶，例如：
+ ```
+ # 这是H1（一级标题，字体最大）
+ ## 这是H2（二级标题，字体次之）
+ #### 这是H3 （三级标题)
 
 
-### 但是
+ ###### 这是H6
+ ```
+ 
+ ## 字体
+ **加粗**
+ * 要加粗的文字左右分别用两个 * 号抱起来
+ 
+ *斜体*
+ *要倾斜的文字左右分别用一个* *包起来
+ 
+ ***斜体加粗***
+ *要倾斜和加粗的文字分别用三个 * 号包起来*
+ 
+ *删除线*
+ *要加删除线的文字左右分别用两个 ~~号包起来 ~~
+ 
+ [参考博客1](http://www.markdown.cn/#headers)
+ [参考博客2](https://www.jianshu.com/p/191d1e21f7ed)
 
-我敲了这段代码，执行的时候发现并不会 crash~
-
-```objc
-@property (nonatomic, strong) NSString *target;
-dispatch_queue_t queue = dispatch_queue_create("parallel", DISPATCH_QUEUE_CONCURRENT);
-for (int i = 0; i < 1000000 ; i++) {
-    dispatch_async(queue, ^{
-    	// ‘ksddkjalkjd’删除了
-        self.target = [NSString stringWithFormat:@"%d",i];
-    });
-}
-```
-
-原因就出在对 `self.target` 赋值的字符串上。博客的最后也提到了 - *‘上述代码的字符串改短一些，就不会崩溃’*，还有 `Tagged Pointer` 这个东西。
-
-我们将上面的代码修改下：
-
-
-```objc
-NSString *str = [NSString stringWithFormat:@"%d", i];
-NSLog(@"%d, %s, %p", i, object_getClassName(str), str);
-self.target = str;
-```
-
-输出：
-
-```
-0, NSTaggedPointerString, 0x3015
-```
-
-发现这个字符串类型是 `NSTaggedPointerString`，那我们来看看 Tagged Pointer 是什么？
-
-### Tagged Pointer
-
-Tagged Pointer 详细的内容可以看这里 [深入理解Tagged Pointer](http://www.infoq.com/cn/articles/deep-understanding-of-tagged-pointer)。
-
-Tagged Pointer 是一个能够提升性能、节省内存的有趣的技术。
-
-- Tagged Pointer 专门用来存储小的对象，例如 **NSNumber** 和 **NSDate**（后来可以存储小字符串）
-- Tagged Pointer 指针的值不再是地址了，而是真正的值。所以，实际上它不再是一个对象了，它只是一个披着对象皮的普通变量而已。
-- 它的内存并不存储在堆中，也不需要 malloc 和 free，所以拥有极快的读取和创建速度。
-
-
-
-
-### 参考：
-
-- [从一道网易面试题浅谈OC线程安全](https://www.jianshu.com/p/cec2a41aa0e7)
-
-- [深入理解Tagged Pointer](http://www.infoq.com/cn/articles/deep-understanding-of-tagged-pointer)
-
-- [【译】采用Tagged Pointer的字符串](http://www.cocoachina.com/ios/20150918/13449.html)
 
